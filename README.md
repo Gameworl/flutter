@@ -1,92 +1,147 @@
-# InitiationFlutter
+#  Initiation Flutter
+
+## Présentation du langage dart:
+`cf lib/dart/*`
+
+## Présentation de flutter:
+
+Le fichier pubspec.yaml est le fichier de configuration, on y retrouve:
+- le nom de l'application
+- sa version
+- la liste de ses dépendances
 
 
+Dans le répertoire lib le fichier main.dart contient l'ensemble de l'application d'exemple
 
-## Getting started
+Le projet posséde une dépendance pour apporter les widgets de base pour la création d'une application
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+```dart 
+import 'package:flutter/material.dart';
 ```
-cd existing_repo
-git remote add origin https://forge.iut-larochelle.fr/mbelmont/initiationflutter.git
-git branch -M main
-git push -uf origin main
+
+Au lancement, on lance la méthode run en précisant le widget root
+```dart
+void main() {
+  runApp(const MyApp());
+}
+```
+Le premier widget est un composant dit state less, il ne posséde pas de contenu dynamique (qui s'adapte en fonction des actions de l'utilisateur)
+
+Il a son propre constructeur, il n'attend aucune donnée du widget parent.
+
+Il faut surcharger la méthode build pour décrire notre widget
+```dart
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+   ...
+  }
+}
+```
+MaterialApp permet de créer une structure pour les applications avec le visuel android
+On y gère le titre , le style général, les routes ou la page d'accueil
+
+```dart
+ return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 18, 18, 184)),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+```
+Le widget de la page est un widget state full. Sa structure est différente de celle du state less;
+elle est composée de deux classes. Une principale avec le constructeur. Il récupére une propriété obligatoire du widget parent.
+
+La methode createState fait appel la seconde classe qui sait géré le changement d'état.
+
+```dart
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  
+  @override
+  Widget build(BuildContext context) {
+   
+  }
+}
+```
+Le widget Scaffold, permet de créer un visuel rapidement avec une entete, un corps et un bas d'application
+
+```dart
+ return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+    
+    );
 ```
 
-## Integrate with your tools
+Le changement de état de la propriété `_counter`se déclenche sur onPressed d'un bouton
+```dart
+floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+```
+La méthode appelé va s'appuyer sur la méthode `setState` pour  rafraichir le composant et afficher le nouvel état de la propriété
 
-- [ ] [Set up project integrations](https://forge.iut-larochelle.fr/mbelmont/initiationflutter/-/settings/integrations)
+```dart
+int _counter = 0;
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+```
+Lors du rafraichissement de l'état la variable `$_counter` sera mise à jour 
+```dart
+        Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+```
 
-## Collaborate with your team
+## Travaux pratique
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Préparer votre machine pour développer en flutter
 
-## Test and Deploy
+[Documentation flutter](https://docs.flutter.dev/get-started/install)
 
-Use the built-in continuous integration in GitLab.
+[ ]  installation de flutter
+[ ]  installation de android studio pour créer un émulateur et posséder le sdk android
+[ ]  _et/ou_ installation xcode si vous travaillez sur mac avec un iphone
+[ ]  installation de l'ide, vscode et ses plugins...
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Ma première application
+Créer une application flutter qui demande le nom de l'utilisateur dans un formulaire et lors que l'on clique sur un bouton, cela affiche bonjour {$nom_de_l_utilisateur}
+Si le nom est égal à Voldemort, l'écran devient rouge avec un décompte... puis boom
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
