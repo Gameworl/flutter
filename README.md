@@ -141,7 +141,30 @@ Lors du rafraichissement de l'état la variable `$_counter` sera mise à jour
 [ ]  _et/ou_ installation xcode si vous travaillez sur mac avec un iphone
 [ ]  installation de l'ide, vscode et ses plugins...
 
-### Ma première application
+### Ma première application Programmation d’une bombe
+
+Initier le starter de base flutter, nous allons le modifier pour créer une bombe.
+Nous souhaitons démarrer à 10 notre compte à rebours, chaque clic sur le bouton fera décrémenter le compteur et arrivé à 0 nous changerons le texte pour afficher ‘BOOM’ en rouge et gras.
+Pour être plus visuel nous changerons également le fond d’écran en ‘orange’.
+
+Notre application est maintenant terminée nous pouvons retirer le mode debug.
+
+Quelques éléments d’aide :
+Le style d’un widget Text se définit de cette manière:
+
+```dart
+
+TextStyle _Ts = TextStyle color : Colors green , fontSize : 15
+Text (
+“Mon texte d’exemple”
+style: _Ts
+),
+
+```
+La banner debug se retire en ajoutant :
+debugShowCheckedModeBanner : false , Dans le retour de la fonction build de MyApp
+
+### Mon application évoluée
 Créer une application flutter qui demande le nom de l'utilisateur dans un formulaire et lors que l'on clique sur un bouton, cela affiche bonjour {$nom_de_l_utilisateur}
 Si le nom est égal à Voldemort, l'écran devient rouge avec un décompte... puis boom
 
