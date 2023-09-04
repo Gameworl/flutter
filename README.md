@@ -136,10 +136,10 @@ Lors du rafraichissement de l'état la variable `$_counter` sera mise à jour
 
 [Documentation flutter](https://docs.flutter.dev/get-started/install)
 
-[ ]  installation de flutter
-[ ]  installation de android studio pour créer un émulateur et posséder le sdk android
-[ ]  _et/ou_ installation xcode si vous travaillez sur mac avec un iphone
-[ ]  installation de l'ide, vscode et ses plugins...
+- [ ]  installation de flutter
+- [ ]  installation de android studio pour créer un émulateur et posséder le sdk android
+- [ ]  _et/ou_ installation xcode si vous travaillez sur mac avec un iphone
+- [ ]  installation de l'ide, vscode et ses plugins...
 
 ### Ma première application Programmation d’une bombe
 
@@ -165,6 +165,6 @@ La banner debug se retire en ajoutant :
 debugShowCheckedModeBanner : false , Dans le retour de la fonction build de MyApp
 
 ### Mon application évoluée
-Créer une application flutter qui demande le nom de l'utilisateur dans un formulaire et lors que l'on clique sur un bouton, cela affiche bonjour {$nom_de_l_utilisateur}
+Créer une application flutter qui demande le nom de l'utilisateur dans un formulaire et lorsque l'on clique sur un bouton, cela affiche bonjour {$nom_de_l_utilisateur}
 Si le nom est égal à Voldemort, l'écran devient rouge avec un décompte... puis boom
 
