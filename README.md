@@ -168,3 +168,116 @@ debugShowCheckedModeBanner : false , Dans le retour de la fonction build de MyAp
 Créer une application flutter qui demande le nom de l'utilisateur dans un formulaire et lorsque l'on clique sur un bouton, cela affiche bonjour {$nom_de_l_utilisateur}
 Si le nom est égal à Voldemort, l'écran devient rouge avec un décompte... puis boom
 
+Pour réaliser ce tp, il faut mettre en place un formulaire avec un champs texte et un bouton
+
+Pour récupérer, et utliser le contenu du champs nous allons utiliser un `TextEditingController`. Lors du clic, on va modifié une variable du state et afficher un champs texte .
+
+On conditionne l'affichage pour ne pas voir le _'Hello'_ avant d'avoir saisi un nom
+
+Deuxième condition à mettre en place. Si le nom est égale à voldemort alors on remplace le widget par un autre. 
+
+Le deuxième widget doit être créé dans un autre fichier.
+
+Pour lancer le compte à rebours, on va se baser sur la méthode initState que l'on va sur charger pour ajouter un `Timer.periodic` 
+
+[Documentation Timer](https://api.flutter.dev/flutter/dart-async/Timer/Timer.periodic.html)
+
+Pour afficher le compte à rebours, on va devoir mettre à jour le state. Penser à arréter le timer quand on est zéro.
+
+L'effet du boom sera fait dans un troisième widget.
+
+### Le retour du lead tech
+
+Le leadtech n'est pas content!
+
+
+Il a demandé de gérer lancement du compte à rebours dans une nouvelle page avec une gestion de la navigation _avec des routes nommées_ dans l'application.Et non en conditionnant l'affichage d'un widget.
+  
+[Documentation navigation](https://docs.flutter.dev/ui/navigation)
+
+
+### Les retours du client
+
+Suite à la mise en place de l'application, le client a remarqué qu'il souhaitait ajouter d'autres personnes dans la liste des personnes à faire disparaitre.
+
+Mais il ne veut pas resaisir tous les noms au lancement de l'application, il faut les stocker en local dans l'application.
+
+On va s'appuyer le système stockage `Shared preferences`
+
+[Documentation Shared preferences](https://pub.dev/packages/shared_preferences)
+
+**Quelque petites choses à savoir sur `Shared preferences`**
+
+- La récupération d'instance est asynchrone
+```dart   
+final SharedPreferences prefs = await SharedPreferences.getInstance();
+```
+- L'écriture et la suppression aussi 
+
+```dart
+await prefs.setInt('counter', 10);
+await prefs.remove('counter');
+```
+- La récupération de données est "nullable"
+```dart
+final double? decimal = prefs.getDouble('decimal');
+```  
+- On peut stocker des objets complexes en les sérialisant en JSON puis en utilisant le  `setString`. 
+
+
+**Comment gérer l'asynchronisme dans DART?**
+
+On gère un retour asynchrone grâce à l'objet `Future`. 
+ - Soit on reste en mode itératif avec le mot clé `await` et `async`
+```dart
+ static late SharedPreferences prefs;
+ Future init() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+```
+- Soit on passe en mode fonctionnel avec l'appel de la méthode `then` qui va gérer le callback
+  
+```dart
+ msgAdapter
+        .saveMessage(Message(_author, msgCtrl.text))
+        .then((value) => ...(value));
+```
+
+**Comment sérialiser/désérialiser un objet en JSON?**
+
+- Soit en créant un construtor et methode de sérialisation pour implementer à la main le mapping
+```dart
+  Message.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? "";
+    author = json['author'] ?? "";
+    date = DateTime.parse(json['date'] ?? '');
+    msg = json['msg'] ?? '';
+  }
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'author': author, 'date': date.toString(), 'msg': msg};
+  }
+  ```
+
+- Soit en utilisant la library `json_serializable``
+ [Documention json_serializable](https://pub.dev/packages/json_serializable)
+
+**Comment afficher un menu burger dans MaterialUI?**
+[Documentation Drawer](https://docs.flutter.dev/cookbook/design/drawer)
+
+**Roadmap:**
+
+- [ ] Créer une nouvelle page
+- [ ] Cette page affiche la liste des noms sauvegardés, si aucun nom alors on a au moins _'Voldemort'_
+- [ ] Cette page contient un formulaire pour ajouter un nom à la liste
+- [ ] Cette liste est sauvegardée dans le `SharedPreferences`
+- [ ] On accède à cette page par le Menu Burger du `MaterialUI`
+
+
+**Objectif développeur du mois**
+
+Pour impressionner le Leadtech vous décidez de:
+
+ - avoir un seul widget commun pour le scaffold des deux pages
+ - creer  un widget pour la liste et un pour le formulaire pour la page black list
+ - utiliser une listview builder pour afficher les noms des blacklistés
+ - utiliser une animation à l'ouverture de la page pour faire comme si elle venait de la droite.
