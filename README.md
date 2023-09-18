@@ -281,3 +281,26 @@ Pour impressionner le Leadtech vous décidez de:
  - creer  un widget pour la liste et un pour le formulaire pour la page black list
  - utiliser une listview builder pour afficher les noms des blacklistés
  - utiliser une animation à l'ouverture de la page pour faire comme si elle venait de la droite.
+
+
+
+### Ca n'en finira jamais
+
+Le client revient vers nous car c'est trop pénible de saisir le nom un par un des étudiants
+
+Il nous donne accès à une api avec l'ensemble des étudiants de son école:
+`https://hp-api.onrender.com/api/characters/students`
+
+Pour cela vous avez le choix entre la lib http ou http_request.
+
+- [ ] Créer une nouvelle page, où l'on affiche la liste des étudiants.
+- [ ] Si on slide sur un nom, il s'ajoute à la liste des bannis 
+- [ ] On modifie l'ancienne page (où l'on visualise les bannis) pour que lorsque l'on slide sur un nom, on puisse le débanne l'étudiant
+
+
+
+**Objectif bonus**
+
+- [ ] Créer une page pour prendre une photo et l'afficher avec image_picker
+- [ ] Donner une apparence IOS en plus de l'apparence Android avec cupertinopagescaffold enfonction de l'appareil sur lequel on se trouve avec `platform.isAndroid `
+- [ ] Créer une page de chat avec chat_bubbles: ^1.5.0
